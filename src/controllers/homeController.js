@@ -1,4 +1,7 @@
-import connection from "../configs/connectDB";
+import {
+    createUserService,
+    getListUserService,
+} from "../services/userServices";
 
 let getHome = async (req, res) => {
     return res.render("home");
@@ -7,18 +10,12 @@ let getFormUser = async (req, res) => {
     return res.render("create-user.ejs");
 };
 let postSubmitCreateUser = (req, res) => {
-    let { email, username, password } = req.body;
+    createUserService(req.body);
+    return res.redirect("/create-user");
+};
 
-    connection.query(
-        "insert into users(email, username, password) values (?, ?, ?)",
-        [email, username, password],
-        function (err, results, fields) {
-            if (err) {
-                console.log("err", err);
-            }
-        }
-    );
-
+let getUserList = () => {
+    getListUserService();
     return res.redirect("/create-user");
 };
 
@@ -26,4 +23,5 @@ module.exports = {
     getHome,
     getFormUser,
     postSubmitCreateUser,
+    getUserList,
 };

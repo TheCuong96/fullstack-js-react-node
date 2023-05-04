@@ -1,0 +1,50 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\cuozl\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
+
+PATH: 
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\dotnet\;%NVM_HOME%;%NVM_SYMLINK%;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\Users\cuozl\AppData\Local\Microsoft\WindowsApps;C:\Users\cuozl\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2021.1.3\bin;;C:\Program Files\Azure Data Studio\bin;C:\Users\cuozl\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\cuozl\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\cuozl\AppData\Roaming\npm
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.15.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: connect ETIMEDOUT 2602:ffe4:c48:0:3::3f9:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1494:16)
+
+npm manifest: 
+  {
+      "name": "fullstack-js-react-node",
+      "version": "1.0.0",
+      "description": "",
+      "main": "index.js",
+      "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1",
+          "start": "nodemon --exec ./node_modules/.bin/babel-node src/server.js"
+      },
+      "author": "",
+      "license": "ISC",
+      "dependencies": {
+          "express": "4.17.1",
+          "body-parser": "1.19.0",
+          "ejs": "3.1.6",
+          "@babel/core": "7.15.5",
+          "@babel/node": "7.15.4",
+          "@babel/preset-env": "7.15.6",
+          "dotenv": "10.0.0",
+          "mysql2": "2.3.0",
+          "nodemon": "2.0.12",
+          "bcryptjs": "2.4.3"
+      }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
