@@ -60,7 +60,22 @@ const getListUserService = async () => {
     }
 };
 
+const deleteUserService = async (userId) => {
+    const connection = await mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        database: "fullstack",
+        Promise: bluebird,
+    });
+    try {
+        await connection.execute("delete from users where id = ?", [userId]);
+        return res.redirect("/");
+    } catch (error) {
+        console.log("error", error);
+    }
+};
 module.exports = {
     createUserService,
     getListUserService,
+    deleteUserService,
 };
