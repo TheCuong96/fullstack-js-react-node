@@ -52,6 +52,49 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Primary</button>
             </form>
+
+            <div class="panel panel-success border border-bottom-0 mt-5">
+                <h1 class="panel-heading">List Item</h1>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%" class="text-center">#</th>
+                            <th>Email</th>
+                            <th style="width: 15%" class="text-center">
+                                Username
+                            </th>
+                            <th style="width: 15%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% userList.forEach(function(item,index){ %>
+                        <tr>
+                            <td class="text-center"><%= index + 1%></td>
+                            <td><%= item.email %></td>
+                            <td class="text-center">
+                                <span class="label label-danger"
+                                    ><%= item.username %></span
+                                >
+                            </td>
+                            <td>
+                                <button
+                                    type="button"
+                                    class="btn btn-warning btn-sm"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn btn-danger btn-sm"
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <% })%>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
 </html>
