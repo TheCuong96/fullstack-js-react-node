@@ -50,7 +50,7 @@
                         name="username"
                     />
                 </div>
-                <button type="submit" class="btn btn-primary">Primary</button>
+                <button type="submit" class="btn btn-primary">Create</button>
             </form>
 
             <div class="panel panel-success border border-bottom-0 mt-5">
@@ -63,7 +63,9 @@
                             <th style="width: 15%" class="text-center">
                                 Username
                             </th>
-                            <th style="width: 15%">Action</th>
+                            <th style="width: 15%" class="text-center">
+                                Action
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,13 +78,20 @@
                                     ><%= item.username %></span
                                 >
                             </td>
-                            <td>
-                                <button
-                                    type="button"
-                                    class="btn btn-warning btn-sm"
+                            <td
+                                class="d-flex align-items-center justify-content-evenly"
+                            >
+                                <form
+                                    action="/edit-user/<%= item.id %>"
+                                    method="GET"
                                 >
-                                    Edit
-                                </button>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-warning btn-sm"
+                                    >
+                                        Edit
+                                    </button>
+                                </form>
 
                                 <form action="/delete-user" method="POST">
                                     <input

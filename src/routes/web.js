@@ -4,6 +4,9 @@ import userController from "../controllers/userController";
 let router = express.Router();
 
 const initWebRoute = (app) => {
+    router.post("/edit-user-submit", userController.postSubmitUpdate);
+    router.get("/edit-user/:id", userController.getEditUser);
+
     router.post("/delete-user", userController.deleteUser);
     router.get("/list-user", userController.getUserList);
     router.post("/create-user-submit", userController.postSubmitCreateUser);
