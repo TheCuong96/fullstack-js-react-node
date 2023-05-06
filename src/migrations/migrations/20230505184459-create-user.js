@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable("Users", { 
+        await queryInterface.createTable("User", {
             id: {
                 allowNull: false, // bắt buộc phải có giá trị ở ô này
                 autoIncrement: true, // giá trị tự động tăng
@@ -28,6 +28,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable("Users");
+        await queryInterface.dropTable("User");
     },
 };

@@ -18,7 +18,7 @@ const createUserService = async (data) => {
     let hashPass = hashUserPassword(data.password);
     try {
         const [rows, fields] = await connection.execute(
-            "insert into users(email, username, password) values (?, ?, ?)",
+            "insert into user(email, username, password) values (?, ?, ?)",
             [data.email, data.username, hashPass]
         );
         return rows;
@@ -26,7 +26,7 @@ const createUserService = async (data) => {
         console.log("error", error);
     }
     // connection.query(
-    //     "insert into users(email, username, password) values (?, ?, ?)",
+    //     "insert into user(email, username, password) values (?, ?, ?)",
     //     [data.email, data.username, hashPass],
     //     function (err, results, fields) {
     //         if (err) {
@@ -43,15 +43,15 @@ const getListUserService = async () => {
         database: "fullstack",
         Promise: bluebird,
     });
-    let users = [];
-    // connection.query("Select * from users", function (err, results, fields) {
+    let user = [];
+    // connection.query("Select * from user", function (err, results, fields) {
     //     if (err) {
     //         console.log("err", err);
     //     }
     //     console.log("check results", results);
     // });
     try {
-        const [rows, fields] = await connection.execute("Select * from users");
+        const [rows, fields] = await connection.execute("Select * from user");
         return rows;
     } catch (error) {
         console.log("error", error);
@@ -66,7 +66,7 @@ const deleteUserService = async (userId) => {
         Promise: bluebird,
     });
     try {
-        await connection.execute("delete from users where id = ?", [userId]);
+        await connection.execute("delete from user where id = ?", [userId]);
         return res.redirect("/");
     } catch (error) {
         console.log("error", error);
@@ -83,7 +83,7 @@ const getEditUserService = async (id) => {
     try {
         // lấy data cần edit từ server bằng id
         let [user] = await connection.execute(
-            "Select * from users where id = ?",
+            "Select * from user where id = ?",
             [id]
         );
         return user[0];
@@ -103,7 +103,7 @@ const postSubmitEditUserService = async (data) => {
     });
     try {
         return await connection.execute(
-            "update users set  email = ? , username= ? where id = ?",
+            "update user set  email = ? , username= ? where id = ?",
             [email, username, id]
         );
     } catch (error) {

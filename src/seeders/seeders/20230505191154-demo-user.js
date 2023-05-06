@@ -12,7 +12,7 @@ module.exports = {
          * }], {});
          */
         await queryInterface.bulkInsert(
-            "Users", // truyển tên table vào
+            "User", // truyển tên table vào
             [
                 {
                     email: "data1@gmail.com",
