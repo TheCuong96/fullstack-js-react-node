@@ -24,8 +24,25 @@ const createUserService = async (data) => {
 
 const getListUserService = async () => {
     try {
-        const listData = await db.User.findAll();
-        return listData;
+        // const listData = await db.User.findAll();
+        const listData = await db.User.findOne({
+            // hàm này lấy info user thông qua id, và lấy thông tin Group của chính user đang có
+            where: { id: 1 }, // truyền id để lấy data
+            attributes: ["id", "username", "email"], // thằng này tồn tại sẽ trả về các thuộc tính mà ta muốn, nếu không thì nó sẽ trả ra rất nhiều data phụ
+            raw: true, // compiler data trả về thành object js
+            include: [{ model: db.Group, attributes: ["name", "description"] }],
+            nest: true, // compiler data trả về thành object js cho các table con
+        });
+
+        const role = await db.Role.findAll({
+            // hàm này lấy tất cả Group id = 1 có trong table role
+            include: { model: db.Group, where: { id: 1 } },
+            raw: true, // compiler data trả về thành object js
+            nest: true, // compiler data trả về thành object js cho các table con
+        });
+        console.log("listData", listData);
+        console.log("role", role);
+        // return listData;
     } catch (error) {
         console.log("error", error);
     }

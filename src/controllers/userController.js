@@ -8,7 +8,7 @@ import {
 
 let getFormUser = async (req, res) => {
     let userList = await getListUserService();
-    return res.render("user.ejs", { userList });
+    // return res.render("user.ejs", { userList });
 };
 let postSubmitCreateUser = async (req, res) => {
     await createUserService(req.body);

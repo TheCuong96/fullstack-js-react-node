@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            Group.hasMany(models.User); //1-n, 1 group thì có nhiều user
+            Group.belongsToMany(models.Role, { through: "Group_Role" }); // vì Group và Role là mối quan hệ nhiều nhiều, nên sinh ra table Group_Role(là bảng thứ 3), Group với Role bây giờ sẽ quan hệ 1-n thông qua table Group_Role
         }
     }
     Group.init(

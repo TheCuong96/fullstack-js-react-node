@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            User.belongsTo(models.Group); // đây là mối quan hệ 1-1
+            User.belongsToMany(models.Project, { through: "Project_User" }); //Project và User là quan hệ n-n thông qua Project_User, nên User với Project_User là quan hệ 1-n
         }
     }
     User.init(
