@@ -2,6 +2,8 @@
 import bcrypt from "bcrypt";
 import mysql from "mysql2/promise";
 import bluebird from "bluebird";
+
+import db from "../models";
 const salt = bcrypt.genSaltSync(10);
 
 const hashUserPassword = (passwordUser) => {
@@ -9,22 +11,35 @@ const hashUserPassword = (passwordUser) => {
 };
 
 const createUserService = async (data) => {
-    const connection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        database: "fullstack",
-        Promise: bluebird,
-    });
     let hashPass = hashUserPassword(data.password);
     try {
-        const [rows, fields] = await connection.execute(
-            "insert into user(email, username, password) values (?, ?, ?)",
-            [data.email, data.username, hashPass]
-        );
-        return rows;
+        await db.User.create({
+            ...data,
+            password: hashPass,
+        });
     } catch (error) {
         console.log("error", error);
     }
+
+    // const connection = await mysql.createConnection({
+    //     host: "localhost",
+    //     user: "root",
+    //     database: "fullstack",
+    //     Promise: bluebird,
+    // });
+    // let hashPass = hashUserPassword(data.password);
+    // try {
+    //     const [rows, fields] = await connection.execute(
+    //         "insert into user(email, username, password) values (?, ?, ?)",
+    //         [data.email, data.username, hashPass]
+    //     );
+    //     return rows;
+    // } catch (error) {
+    //     console.log("error", error);
+    // }
+
+    //////////
+
     // connection.query(
     //     "insert into user(email, username, password) values (?, ?, ?)",
     //     [data.email, data.username, hashPass],

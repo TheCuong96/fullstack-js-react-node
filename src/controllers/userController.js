@@ -10,8 +10,8 @@ let getFormUser = async (req, res) => {
     let userList = await getListUserService();
     return res.render("user.ejs", { userList });
 };
-let postSubmitCreateUser = (req, res) => {
-    createUserService(req.body);
+let postSubmitCreateUser = async (req, res) => {
+    await createUserService(req.body);
     return res.redirect("/create-user");
 };
 let getUserList = async (req, res) => {
