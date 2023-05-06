@@ -20,88 +20,34 @@ const createUserService = async (data) => {
     } catch (error) {
         console.log("error", error);
     }
-
-    // const connection = await mysql.createConnection({
-    //     host: "localhost",
-    //     user: "root",
-    //     database: "fullstack",
-    //     Promise: bluebird,
-    // });
-    // let hashPass = hashUserPassword(data.password);
-    // try {
-    //     const [rows, fields] = await connection.execute(
-    //         "insert into user(email, username, password) values (?, ?, ?)",
-    //         [data.email, data.username, hashPass]
-    //     );
-    //     return rows;
-    // } catch (error) {
-    //     console.log("error", error);
-    // }
-
-    //////////
-
-    // connection.query(
-    //     "insert into user(email, username, password) values (?, ?, ?)",
-    //     [data.email, data.username, hashPass],
-    //     function (err, results, fields) {
-    //         if (err) {
-    //             console.log("err", err);
-    //         }
-    //     }
-    // );
 };
 
 const getListUserService = async () => {
-    const connection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        database: "fullstack",
-        Promise: bluebird,
-    });
-    let user = [];
-    // connection.query("Select * from user", function (err, results, fields) {
-    //     if (err) {
-    //         console.log("err", err);
-    //     }
-    //     console.log("check results", results);
-    // });
     try {
-        const [rows, fields] = await connection.execute("Select * from user");
-        return rows;
+        const listData = await db.User.findAll();
+        return listData;
     } catch (error) {
         console.log("error", error);
     }
 };
 
 const deleteUserService = async (userId) => {
-    const connection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        database: "fullstack",
-        Promise: bluebird,
-    });
     try {
-        await connection.execute("delete from user where id = ?", [userId]);
-        return res.redirect("/");
+        db.User.destroy({
+            where: { id: userId },
+        });
     } catch (error) {
         console.log("error", error);
     }
 };
 
-const getEditUserService = async (id) => {
-    const connection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        database: "fullstack",
-        Promise: bluebird,
-    });
+const getOneUserService = async (id) => {
     try {
-        // lấy data cần edit từ server bằng id
-        let [user] = await connection.execute(
-            "Select * from user where id = ?",
-            [id]
-        );
-        return user[0];
+        let user = {};
+        user = await db.User.findOne({
+            where: { id: id },
+        });
+        return user.get({ plain: true }); //plain: true để xử lý data trả về
     } catch (error) {
         console.log("error", error);
     }
@@ -109,17 +55,15 @@ const getEditUserService = async (id) => {
 
 const postSubmitEditUserService = async (data) => {
     console.log("data", data);
-    const { email, username, id } = data;
-    const connection = await mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        database: "fullstack",
-        Promise: bluebird,
-    });
+    const { id, ...restData } = data;
     try {
-        return await connection.execute(
-            "update user set  email = ? , username= ? where id = ?",
-            [email, username, id]
+        return await db.User.update(
+            {
+                ...restData,
+            },
+            {
+                where: { id: id },
+            }
         );
     } catch (error) {
         console.log("error", error);
@@ -129,6 +73,6 @@ module.exports = {
     createUserService,
     getListUserService,
     deleteUserService,
-    getEditUserService,
+    getOneUserService,
     postSubmitEditUserService,
 };

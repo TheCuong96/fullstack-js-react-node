@@ -2,7 +2,7 @@ import {
     createUserService,
     getListUserService,
     deleteUserService,
-    getEditUserService,
+    getOneUserService,
     postSubmitEditUserService,
 } from "../services/userServices";
 
@@ -24,14 +24,12 @@ let deleteUser = async (req, res) => {
 };
 
 let getEditUser = async (req, res) => {
-    console.log("req", req.params);
     // lấy data cần edit từ server bằng id
-    let userList = await getEditUserService(req.params.id);
+    let userList = await getOneUserService(req.params.id);
     return res.render("edit-user.ejs", { dataUser: userList });
 };
 
 let postSubmitUpdate = async (req, res) => {
-    console.log("req", req.body);
     // lấy data cần edit từ server bằng id
     let userList = await postSubmitEditUserService(req.body);
     return res.redirect("/create-user");
