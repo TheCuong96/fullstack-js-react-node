@@ -64,3 +64,18 @@ trong file: /src/config/config.json
 
 => chạy lệnh này để tạo ra form mẫu cho data : node_modules\.bin\sequelize seed:generate --name demo-user => để nó tạo ra file fake data trong folder seeders
 => sau đó chạy: node_modules\.bin\sequelize db:seed:all => để data tạo ra dưới database
+
+## CORS: dùng để ngăn chặn các hành động từ đường link khác vào url của ta, nói cách khác nghĩa là bảo mật:
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', process.env.REACT_URL);
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET,POST,OPTIONS,PUT,PATCH,DELETE'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With,content-type'
+    );
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
