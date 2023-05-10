@@ -1,4 +1,7 @@
-import { createUserService } from '../services/loginRegisterServices';
+import {
+    createUserService,
+    handleUserLogin,
+} from '../services/loginRegisterServices';
 let postRegisterUser = async (req, res) => {
     try {
         if (!req.body.email || !req.body.phone || !req.body.password) {
@@ -29,6 +32,25 @@ let postRegisterUser = async (req, res) => {
         });
     }
 };
+
+let postLoginUser = async (req, res) => {
+    try {
+        let data = await handleUserLogin(req.body);
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
+        });
+    } catch (error) {
+        console.log('error', error);
+        return res.status(500).json({
+            EM: 'error from server',
+            EC: '-1',
+            DT: '',
+        });
+    }
+};
 module.exports = {
     postRegisterUser,
+    postLoginUser,
 };
