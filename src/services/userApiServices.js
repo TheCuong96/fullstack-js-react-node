@@ -35,6 +35,8 @@ const getUserWithPagiService = async (page, limit) => {
         const { count, rows } = await db.User.findAndCountAll({
             offset: offset,
             limit: limit,
+            attributes: ['id', 'username', 'email', 'phone', 'sex'],
+            include: { model: db.Group, attributes: ['name', 'description'] },
         });
         let totalPages = Math.ceil(count / limit);
         let data = {
@@ -50,19 +52,38 @@ const getUserWithPagiService = async (page, limit) => {
     } catch (error) {
         console.log('error', error);
         return {
-            EM: 'something wrongs with servies 123',
+            EM: 'something wrongs with servies',
             EC: 1,
             DT: [],
         };
     }
 };
-const deleteUserService = async (userId) => {
+const deleteUserService = async (id) => {
     try {
-        db.User.destroy({
-            where: { id: userId },
+        let user = await db.User.findOne({
+            where: { id: id },
         });
+        if (user) {
+            user.destroy();
+            return {
+                EM: 'Delete user success',
+                EC: 0,
+                DT: [],
+            };
+        } else {
+            return {
+                EM: 'User not exist',
+                EC: 2,
+                DT: [],
+            };
+        }
     } catch (error) {
         console.log('error', error);
+        return {
+            EM: 'serror from servies',
+            EC: 1,
+            DT: [],
+        };
     }
 };
 

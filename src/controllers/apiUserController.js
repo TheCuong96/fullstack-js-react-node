@@ -2,7 +2,26 @@ import {
     getAllUserService,
     handleUserLogin,
     getUserWithPagiService,
+    deleteUserService,
 } from '../services/userApiServices';
+
+let deleteFunc = async (req, res) => {
+    try {
+        let data = await deleteUserService(req.body.id);
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            EM: 'error from server ',
+            EC: '-1',
+            DT: '',
+        });
+    }
+};
+
 let readFunc = async (req, res) => {
     try {
         const { page, limit } = req.query;
@@ -53,4 +72,5 @@ let postLoginUser = async (req, res) => {
 module.exports = {
     readFunc,
     postLoginUser,
+    deleteFunc,
 };
