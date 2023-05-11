@@ -1,16 +1,27 @@
 import {
     getAllUserService,
     handleUserLogin,
+    getUserWithPagiService,
 } from '../services/userApiServices';
 let readFunc = async (req, res) => {
     try {
-        console.log('');
-        let data = await getAllUserService();
-        return res.status(200).json({
-            EM: data.EM,
-            EC: data.EC,
-            DT: data.DT,
-        });
+        const { page, limit } = req.query;
+        console.log('page', page, limit);
+        if (page && limit) {
+            let data = await getUserWithPagiService(+page, +limit);
+            return res.status(200).json({
+                EM: data.EM,
+                EC: data.EC,
+                DT: data.DT,
+            });
+        } else {
+            let data = await getAllUserService();
+            return res.status(200).json({
+                EM: data.EM,
+                EC: data.EC,
+                DT: data.DT,
+            });
+        }
     } catch (error) {
         return res.status(500).json({
             EM: 'error from server ',

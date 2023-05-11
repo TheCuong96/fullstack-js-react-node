@@ -28,7 +28,34 @@ const getAllUserService = async () => {
         };
     }
 };
+const getUserWithPagiService = async (page, limit) => {
+    try {
+        let offset = (page - 1) * limit;
 
+        const { count, rows } = await db.User.findAndCountAll({
+            offset: offset,
+            limit: limit,
+        });
+        let totalPages = Math.ceil(count / limit);
+        let data = {
+            totalRous: count,
+            totalPages: totalPages,
+            user: rows,
+        };
+        return {
+            EM: 'fetch ok',
+            EC: 0,
+            DT: data,
+        };
+    } catch (error) {
+        console.log('error', error);
+        return {
+            EM: 'something wrongs with servies 123',
+            EC: 1,
+            DT: [],
+        };
+    }
+};
 const deleteUserService = async (userId) => {
     try {
         db.User.destroy({
@@ -72,4 +99,5 @@ module.exports = {
     deleteUserService,
     getOneUserService,
     postSubmitEditUserService,
+    getUserWithPagiService,
 };
