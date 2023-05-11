@@ -3,6 +3,7 @@ import {
     handleUserLogin,
     getUserWithPagiService,
     deleteUserService,
+    createNewUserService,
 } from '../services/userApiServices';
 
 let deleteFunc = async (req, res) => {
@@ -69,8 +70,28 @@ let postLoginUser = async (req, res) => {
         });
     }
 };
+
+let postCreateUserFunc = async (req, res) => {
+    try {
+        //validate
+        let data = await createNewUserService(req.body);
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
+        });
+    } catch (error) {
+        console.log('error', error);
+        return res.status(500).json({
+            EM: 'error from server',
+            EC: '-1',
+            DT: '',
+        });
+    }
+};
 module.exports = {
     readFunc,
     postLoginUser,
     deleteFunc,
+    postCreateUserFunc,
 };

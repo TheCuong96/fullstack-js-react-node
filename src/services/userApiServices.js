@@ -1,5 +1,9 @@
 import db from '../models';
-
+import bcrypt from 'bcrypt';
+const salt = bcrypt.genSaltSync(10);
+const hashUserPassword = (passwordUser) => {
+    return bcrypt.hashSync(passwordUser, salt);
+};
 const getAllUserService = async () => {
     try {
         const listUser = await db.User.findAll({
@@ -115,10 +119,28 @@ const postSubmitEditUserService = async (data) => {
         console.log('error', error);
     }
 };
+
+const createNewUserService = async (data) => {
+    try {
+        let hashPass = hashUserPassword(data.password);
+        await db.User.create({
+            ...data,
+            password: hashPass,
+        });
+        return {
+            EM: 'create ok',
+            EC: 0,
+            DT: [],
+        };
+    } catch (error) {
+        console.log('error', error);
+    }
+};
 module.exports = {
     getAllUserService,
     deleteUserService,
     getOneUserService,
     postSubmitEditUserService,
     getUserWithPagiService,
+    createNewUserService,
 };
