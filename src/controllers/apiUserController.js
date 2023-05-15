@@ -4,6 +4,7 @@ import {
     getUserWithPagiService,
     deleteUserService,
     createNewUserService,
+    updateUserService,
 } from '../services/userApiServices';
 
 let deleteFunc = async (req, res) => {
@@ -89,9 +90,30 @@ let postCreateUserFunc = async (req, res) => {
         });
     }
 };
+
+let updateUserFunc = async (req, res) => {
+    try {
+        //validate
+        let data = await updateUserService(req.body);
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT,
+        });
+    } catch (error) {
+        console.log('error', error);
+        return res.status(500).json({
+            EM: 'error from server',
+            EC: '-1',
+            DT: '',
+        });
+    }
+};
+
 module.exports = {
     readFunc,
     postLoginUser,
     deleteFunc,
     postCreateUserFunc,
+    updateUserFunc,
 };

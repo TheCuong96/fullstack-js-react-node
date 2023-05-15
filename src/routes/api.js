@@ -5,6 +5,7 @@ import {
     readFunc,
     deleteFunc,
     postCreateUserFunc,
+    updateUserFunc,
 } from '../controllers/apiUserController';
 
 import { readGroup } from '../controllers/apiGroupController';
@@ -15,7 +16,7 @@ const initApiRoute = (app) => {
 
     router.get('/user/read', readFunc);
     router.post('/user/create', postCreateUserFunc);
-    // router.put('/user/update', readFunc);
+    router.put('/user/update', updateUserFunc);
     router.delete('/user/delete', deleteFunc);
 
     router.post('/login', postLoginUser);
